@@ -45,8 +45,7 @@ abstract class WordRoomDatabase : RoomDatabase() {
         private var INSTANCE: WordRoomDatabase? = null
 
         fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
+            context: Context
         ): WordRoomDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database

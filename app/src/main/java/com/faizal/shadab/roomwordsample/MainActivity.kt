@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), KodeinAware {
+    override val kodein by closestKodein()
+    private val viewModelFactory: WordViewModelFactory by instance()
     private lateinit var wordViewModel: WordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(this)
 
-        wordViewModel = ViewModelProvider(this).get(WordViewModel::class.java)
+        wordViewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
         wordViewModel.allWords.observe(this, Observer { words ->
             // Update the cached copy of the words in the adapter.
             words?.let { adapter.setWords(it) }
