@@ -22,4 +22,7 @@ class WordViewModel(application: Application, val repository: WordRepository) : 
     fun insert(word: Word) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(word)
     }
+    fun delete(word: Word) = viewModelScope.launch {
+        repository.delete(word)
+    }
 }

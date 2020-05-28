@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
+import javax.security.auth.callback.Callback
 
 class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by closestKodein()
@@ -38,6 +40,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
             val intent = Intent(this@MainActivity, NewWordActivity::class.java)
             startActivityForResult(intent, Companion.newWordActivityRequestCode)
         }
+        val callback = MyCallBack(wordViewModel, adapter)
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(recyclerview)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

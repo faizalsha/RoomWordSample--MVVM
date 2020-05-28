@@ -33,5 +33,9 @@ class WordListAdapter internal constructor(
         notifyDataSetChanged()
     }
 
+    fun getWordAt(position: Int): Word{
+        return words.get(position)
+    }
+
     override fun getItemCount() = words.size
 }
